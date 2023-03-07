@@ -1,0 +1,48 @@
+---
+
+
+library(tidyverse)
+library("ggplot2")
+install.packages("readr")
+library(readr)
+data <- read_delim("330.csv")
+data <- read.csv("330.csv")
+
+data %>% 
+filter(Expense=="Room/Board"|Expense=="Fees/Tuition") %>% 
+group_by(Expense,State) %>% 
+summarise(ave=mean(Value),.groups="keep") %>% 
+ggplot( aes(State,ave,fill=as.factor(Expense))) +
+geom_col(position="dodge")+
+labs(title="how much on average families are spending on fees/tuition and on room/board per state",x="Expense Type",y="Tuition Cost")+
+scale_fill_discrete(name="Expense Type")
+
+  
+  
+  
+  
+  
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
