@@ -29,16 +29,16 @@ intro_page<- tabPanel(
     p("This data was sourced from Kaggle, from a user called KENMORETOAST."),
     h3(id="text3", "Purpose & Importance"),
     p("This data is important because it gives an overview of the tution costs per state, which can be used to generalize the average cost by state, and we can see the trends of tuition cost throughout the United States."),
-    p("Since this data focuses on in-state tuition, our target audience is families or individuals who are in-state students."),
+    p("Since this data focuses more on in-state tuition, our target audience is families or individuals who are in-state students."),
+    p("This data also combines data from 2013 until now, so prices might be averaged to result in a lower price, compared to today's tuition."),
     p("With this data, our goal was to answer these questions:"),
       p("What is the average cost per state?"),
       p("What is the difference between in-state and out-of-state tuition?"),
       p("On average, how much are families are spending on fees/tuition and on room/board?"),
     tags$style(HTML("#text1{color: gray;}")),
     tags$style(HTML("#text2{color: blue;}")),
-    img(
-      src = "~/group-project/tuition.png")
-      )
+    imageOutput('tuition.png')
+    )
   )
 
 

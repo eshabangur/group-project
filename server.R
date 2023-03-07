@@ -10,7 +10,13 @@ library(rsconnect)
 tuition <- read.csv('nces330_20.csv')
 
 server <- function(input, output) {
- 
+
+#intro
+  output$tuition.png <- renderImage({
+    list(src ='tuition.png')
+  })
+  
+  
 #map
   colnames(tuition) <- c("Year", "State", "Type", "Length", "Expense", "Value")
   tuition <- na.omit(tuition)
@@ -76,7 +82,6 @@ output$Plot <- renderPlot({
 })
 
 }
-
 
 
 shinyApp(ui, server)
