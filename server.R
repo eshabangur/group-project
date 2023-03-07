@@ -5,7 +5,7 @@ library(maps)
 library(leaflet)
 library(shiny)
 library(ggiraph)
-
+library(rsconnect)
 
 tuition <- read.csv('nces330_20.csv')
 
@@ -39,7 +39,7 @@ server <- function(input, output) {
   output$map_visual <- renderggiraph({
     ggiraph(code = print(map_visual), hover_css = "fill-opacity: 0.8; cursor: pointer;")
   })
-}
+
 
 #graph 
   
@@ -51,8 +51,32 @@ server <- function(input, output) {
   
 
 #conclusion 
+
+rows<-nrow(tuition)
+rows
+cols<-ncol(tuition)
+cols
+school_type<-unique(tuition$Type)
+schooltype_location<- tuition %>%
+  group_by(Type) %>%
+  summarise(ave=mean(Value))  
+
+output$Plot <- renderPlot({
+  tuition %>%
+    filter(State %in% input$States) %>%
+    group_by(State) %>%
+    summarise(ave_data=mean(Value)) %>%
+    ggplot(aes(State,ave_data,fill=as.factor(State)))+
+    geom_col(position="dodge")+
+    labs(title="Average Tuition Costs by State",
+         x="State",
+         y="tuition cost")+
+    scale_fill_discrete(name="State")
   
-  
+})
+
+}
+
 
 
 shinyApp(ui, server)

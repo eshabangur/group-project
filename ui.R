@@ -25,24 +25,22 @@ intro_page<- tabPanel(
     h3(id="text", "The Average Cost of Undergrad College by State"),
     tags$style(HTML("#text{color: purple;}")),
     h3(id="text2", "Information on Dataset"),
-    p(id="text1", "This dataset explores the average undergraduate tuition and fees and room and board rates charged for full-time students in degree-granting postsecondary institutions, by control and level of institution and state or jurisdiction."),
-    p(id="text1", "This data was sourced from Kaggle, from a user called KENMORETOAST."),
+    p("This dataset explores the average undergraduate tuition and fees and room and board rates charged for full-time students in degree-granting postsecondary institutions, by control and level of institution and state or jurisdiction."),
+    p("This data was sourced from Kaggle, from a user called KENMORETOAST."),
     h3(id="text3", "Purpose & Importance"),
-    p(id="text1", "This data is important because it gives an overview of the tution costs per state, which can be used to generalize the average cost by state, and we can see the trends of tuition cost throughout the United States."),
-    p(id="text1", "Since this data focuses on in-state tuition, our target audience is families or individuals who are in-state students."),
-    p(id="text1", "With this data, our goal was to answer these questions:"),
+    p("This data is important because it gives an overview of the tution costs per state, which can be used to generalize the average cost by state, and we can see the trends of tuition cost throughout the United States."),
+    p("Since this data focuses on in-state tuition, our target audience is families or individuals who are in-state students."),
+    p("With this data, our goal was to answer these questions:"),
       p("What is the average cost per state?"),
       p("What is the difference between in-state and out-of-state tuition?"),
       p("On average, how much are families are spending on fees/tuition and on room/board?"),
     tags$style(HTML("#text1{color: gray;}")),
     tags$style(HTML("#text2{color: blue;}")),
     img(
-      src = "/Users/annafang/desktop/info201/group-project/tuition.png",
-      height = 400,
-      width = 800,
+      src = "~/group-project/tuition.png")
       )
   )
-)
+
 
 map <- tabPanel(
   "Map",
@@ -61,9 +59,8 @@ conclusion <- tabPanel(
       h3(id="text", "Conclusion"),
       tags$style(HTML("#text{color: purple;}")),
       h3(id="text2", "Notable patterns"),
-      p(id="text1", "One pattern we noticed was that East Coast has notably higher tuition costs compared to West coast. "),
-      p(id="text1", "This may be due to more Ivy League Schools and private schools in East coast compared to Midwest and West coast."),
-      p(id="text1", "[insert data/table/chart that demonstrates pattern]"),
+      p("One pattern we noticed was that East Coast has notably higher tuition costs compared to West coast. "),
+      p("This may be due to more Ivy League Schools and private schools in East coast compared to Midwest and West coast."),
       h3(id="text3", "Data Quality"),
       p(id="text1", "Some critiques on the data:"),
       p("The data set was not detailed enough, especially because the only numeric values we could use were from the 'Value' column."),
@@ -76,6 +73,21 @@ conclusion <- tabPanel(
       p("In the future, we could advance the project by making the map more interactive and allowing users to choose which coast they want to focus on. We could also create a graph that shows the difference in tuition with housing and without housing fees."),
       tags$style(HTML("#text1{color: gray;}")),
       tags$style(HTML("#text2{color: blue;}")),
+                 sidebarLayout(
+                   sidebarPanel(
+                     tags$p("This graph shows the average tution costs per State."),
+                     tags$p("You can view costs by State by changing the input."),
+                     checkboxGroupInput("States",
+                                        "Select State",
+                                        choices=unique(tuition$State),
+                                        selected=unique(tuition$State))
+                   ),
+                   mainPanel(
+                     plotOutput("Plot")
+                   )
+                 )
+    
+    
     )
 )
 
