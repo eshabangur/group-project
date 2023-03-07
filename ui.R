@@ -1,14 +1,4 @@
 
-tuition <- read.csv('nces330_20.csv')
-
-# Load the required packages
-library(ggplot2)
-library(ggiraph)
-library(dplyr)
-library(maps)
-library(leaflet)
-library(shiny)
-
 ui <- shinyUI(
   navbarPage("Average Cost of Undergrade College by State",
   intro_page,
