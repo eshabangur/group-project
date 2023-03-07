@@ -7,11 +7,10 @@ library(shiny)
 library(ggiraph)
 
 
-setwd('/Users/annafang/desktop/info201/group-project')
 tuition <- read.csv('nces330_20.csv')
 
 server <- function(input, output) {
-
+ 
 #map
   colnames(tuition) <- c("Year", "State", "Type", "Length", "Expense", "Value")
   tuition <- na.omit(tuition)
@@ -32,11 +31,15 @@ server <- function(input, output) {
     geom_polygon_interactive() +
     scale_fill_gradient(low = "white", high = "red", na.value = "grey50") +
     coord_map() +
-    labs(title = "Average College Cost by State",
-         fill = "Average Cost")
+    labs(title = "Average College Tuition by State",
+         fill = "Average Tuition")
   
-  ggiraph(code = print(p), hover_css = "fill-opacity: 0.8; cursor: pointer;")
-
+  ggiraph(code = print(map_visual), hover_css = "fill-opacity: 0.8; cursor: pointer;")
+  
+  output$map_visual <- renderggiraph({
+    ggiraph(code = print(map_visual), hover_css = "fill-opacity: 0.8; cursor: pointer;")
+  })
+}
 
 #graph 
   
@@ -44,7 +47,13 @@ server <- function(input, output) {
   
   
 #chart 
-}
+  
+  
+
+#conclusion 
+  
+  
+
 
 shinyApp(ui, server)
 
