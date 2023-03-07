@@ -13,6 +13,8 @@ ui <- shinyUI(
   navbarPage("Average Cost of Undergrade College by State",
   intro_page,
   map,
+  graph1, 
+  graph2,
   conclusion
   
   )
@@ -53,6 +55,47 @@ map <- tabPanel(
   )
 )
 
+graph1 <- tabPanel(
+  "Graph 1",
+  titlePanel("Tuition Difference between 2-year & 4-year Colleges in the US"),
+  sidebarLayout(
+    sidebarPanel(
+      checkboxGroupInput("States",
+                         "Select State",
+                         choices=unique(tuition$State),
+                         selected=unique(tuition$State))
+    ),
+    mainPanel(
+      p("This graph shows the average difference between 2-year and 4-year colleges in the United States."),
+      p("The x-axis is labelled in alphabetical order of the 50 states"),
+      p("We can see that consistent throughout 50 states, 4-year colleges on average cost around $10,000 more thatn 2-year colleges."),
+      plotOutput("Plot1")
+    )
+    
+       
+   )
+  )
+
+
+
+graph2 <- tabPanel(
+  "Graph 2",
+  titlePanel("On average, how much do families spend on boarding and other fees per state? "),
+  sidebarLayout(
+    sidebarPanel(
+      checkboxGroupInput("States",
+                         "Select State",
+                         choices=unique(tuition$State),
+                         selected=unique(tuition$State))
+    ),
+      
+  mainPanel(
+    p("This graph shows the average cost of boarding fees and tuition fees."),
+    plotOutput("Plot2")
+  )
+)
+)
+
 conclusion <- tabPanel(
     "Conclusion",
     mainPanel(
@@ -86,8 +129,6 @@ conclusion <- tabPanel(
                      plotOutput("Plot")
                    )
                  )
-    
-    
     )
 )
 

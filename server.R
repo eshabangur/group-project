@@ -13,8 +13,8 @@ server <- function(input, output) {
 
 #intro
   output$tuition.png <- renderImage({
-    list(src ='tuition.png')
-  })
+    list(src ='tuition.png', deletefile = FALSE)
+  }, deleteFile = FALSE)
   
   
 #map
@@ -47,12 +47,36 @@ server <- function(input, output) {
   })
 
 
-#graph 
+#graph1
+  output$Plot1 <- renderPlot({
+    tuition %>%
+      filter(State %in% input$States) %>%
+      filter(Length == "4-year" | Length == "2-year") %>%
+      group_by(Length,State) %>%
+      summarise(ave_data=mean(Value),.groups="keep") %>%
+      ggplot(aes(State,ave_data,fill=as.factor(Length)))+
+      geom_col(position="dodge")+
+      labs(title="Tuition Difference Between 2-Year and 4-Year Colleges in the US",
+           x="Length",
+           y="Tuition Cost")+
+      scale_fill_discrete(name="Length")
+  })
   
   
   
   
-#chart 
+#graph2
+  output$Plot2 <- renderPlot({
+    tuition %>%
+      filter(State %in% input$States) %>%
+      filter(Expense=="Room/Board"|Expense=="Fees/Tuition") %>%
+      group_by(Expense,State) %>%
+      summarise(ave=mean(Value),.groups="keep") %>%
+      ggplot( aes(State,ave,fill=as.factor(Expense))) +
+      geom_col(position="dodge")+
+      labs(title="How Much on Average are Families spending on Fees/Tuition and on Room/Board per State",x="Expense Type",y="Tuition Cost")+
+      scale_fill_discrete(name="Expense Type")
+  })
   
   
 
